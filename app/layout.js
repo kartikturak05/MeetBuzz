@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
 import { ClerkProvider } from "@clerk/nextjs";
+import { CreateEventDrawer } from "@/components/create-event";
 
 export const metadata = {
   title: "MeetBuzz",
@@ -27,6 +28,8 @@ export default function RootLayout({ children }) {
               © 2025 MeetBuzz. All rights reserved.
             </p>
           </footer>
+          {/* Create event drawer */}
+          <CreateEventDrawer/>
         </body>
       </html>
     </ClerkProvider>
