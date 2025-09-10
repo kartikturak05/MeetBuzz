@@ -31,3 +31,34 @@ export async function createEvent(data){
     return event;
 
 }
+
+export async function getUserEvent(){
+    const user = await currentUser();
+
+    if(!user){
+        throw new Error("Unauthorized");
+    }
+
+    // check if user exists in the db
+     const existingUser = await db.user.findUnique({
+        where:{clerkUserId:user.id},
+    })
+
+    if(!existingUser){
+        throw new Error("User not found in the database");
+    }
+
+    // now get all the events for that user
+
+    const events = await db.event.findMany({
+        where:{userId:existingUser.id},
+        orderBy:{createdAt:"desc"},
+        include:{
+            _count:{
+                select:{bookings:true},
+            },
+        },
+    });
+
+    return {events,username:existingUser.username};
+}
