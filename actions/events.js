@@ -62,3 +62,37 @@ export async function getUserEvent(){
 
     return {events,username:existingUser.username};
 }
+
+// delete the users event
+export async function deleteEvent(eventId){
+    const user = await currentUser();
+
+    if(!user){
+        throw new Error("Unauthorized");
+    }
+
+    // check if user exists in the db
+     const existingUser = await db.user.findUnique({
+        where:{clerkUserId:user.id},
+    })
+
+    if(!existingUser){
+        throw new Error("User not found in the database");
+    }
+
+    // now get all the events for that user
+
+    const event = await db.event.findUnique({
+       where:{id:eventId}
+    });
+
+    if(!event || event.userId != existingUser.id){
+        throw new Error("Event not found or you don't have permission to delete this event");
+    }
+
+    await db.event.delete({
+        where:{id:eventId},
+    })
+
+    return {success:true};
+}
