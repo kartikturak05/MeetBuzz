@@ -4,6 +4,21 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { notFound } from "next/navigation";
 import React from "react";
 
+export async function generateMetadata({params}){
+  const user = await getUserByUsername(params.username);
+  if(!user){
+    return {
+      title:"User not found",
+    };
+  }
+
+  return {
+    title:`${user.name}'s Profile | MeetBuzz`,
+    description:`Welcome to ${user.name}'s scheduling page. Book a call with ${user.name} by selecting one of the available events below.`,
+  }
+
+}
+
 const UserPage = async ({ params }) => {
   const user = await getUserByUsername(params.username);
 
@@ -29,7 +44,7 @@ const UserPage = async ({ params }) => {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {user.events.map((event)=> {
             return (
-              <EventCard key={event.id} event={event} username={params.username}/>
+              <EventCard key={event.id} event={event} username={params.username} isPublic/>
             )
           })}
         </div>

@@ -38,9 +38,16 @@ const EventCard = ({ event, username, isPublic = false }) => {
             router.refresh();
         }
     }
+
+    const handleClick = (e)=>{
+      if(e.target.tagName !== "BUTTON" && e.target.tagName != "svg"){
+        window?.open(`${window?.location.origin}/${username}/${event.id}`,"_blank");
+      }
+    }
+
   return (
     <div>
-      <Card className="flex flex-col justify-between cursor-pointer hover:shadow-lg transition-shadow duration-300">
+      <Card className="flex flex-col justify-between cursor-pointer hover:shadow-lg transition-shadow duration-300" onClick={handleClick}>
         <CardHeader>
           <CardTitle className="text-2xl">{event.title}</CardTitle>
           <CardDescription className="flex justify-between">
