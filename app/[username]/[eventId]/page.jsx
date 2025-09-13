@@ -24,9 +24,9 @@ const EventPage = async ({ params }) => {
   const event = await getEventDetails(username, eventId);
   const availability = await getEventAvailability(eventId);
 
-  console.log(username)
-  console.log(eventId);
-  console.log(availability);
+  // console.log(username)
+  // console.log(eventId);
+  // console.log(availability);
 
   if (!event) {
     notFound();

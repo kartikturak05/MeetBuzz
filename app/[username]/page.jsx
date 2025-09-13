@@ -5,7 +5,8 @@ import { notFound } from "next/navigation";
 import React from "react";
 
 export async function generateMetadata({params}){
-  const user = await getUserByUsername(params.username);
+  const {username} = await params;
+  const user = await getUserByUsername(username);
   if(!user){
     return {
       title:"User not found",
@@ -20,7 +21,8 @@ export async function generateMetadata({params}){
 }
 
 const UserPage = async ({ params }) => {
-  const user = await getUserByUsername(params.username);
+  const { username } = await params;
+  const user = await getUserByUsername(username);
 
   if (!user) {
     notFound();
@@ -44,7 +46,7 @@ const UserPage = async ({ params }) => {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {user.events.map((event)=> {
             return (
-              <EventCard key={event.id} event={event} username={params.username} isPublic/>
+              <EventCard key={event.id} event={event} username={username} isPublic/>
             )
           })}
         </div>
