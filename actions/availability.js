@@ -82,8 +82,8 @@ export async function updateAvailability(data) {
         return [
           {
             day: day.toUpperCase(),
-            startTime: new Date(`${baseDate}T${startTime}`),
-            endTime: new Date(`${baseDate}T${endTime}`),
+            startTime: new Date(`${baseDate}T${startTime}:00Z`),
+            endTime: new Date(`${baseDate}T${endTime}:00Z`),
           },
         ];
       }
@@ -91,7 +91,7 @@ export async function updateAvailability(data) {
     }
   );
 
-  if(user.availability){
+  if(existingUser.availability){
     await db.availability.update({
       where:{id:existingUser.availability.id},
       data:{
