@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import TestimonialCarousel from "@/components/testimonial";
 import { Button } from "@/components/ui/button";
 import {
